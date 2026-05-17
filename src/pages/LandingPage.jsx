@@ -10,7 +10,7 @@ export default function LandingPage() {
           <span style={styles.brand}>SKINSTRIC</span>
           <span style={styles.sectionTag}>[ INTRO ]</span>
         </div>
-        <button style={styles.takeTestBtn} onClick={() => navigate("/analytics")}>
+        <button style={styles.takeTestBtn} onClick={() => navigate("/intro")}>
           TAKE TEST
         </button>
       </header>
