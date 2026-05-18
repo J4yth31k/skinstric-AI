@@ -10,8 +10,9 @@ const CATEGORIES = [
 export default function AnalysisHubPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const data = state?.data || {};
-  const imageDataUrl = state?.imageDataUrl || "";
+  const savedData = (() => { try { return JSON.parse(sessionStorage.getItem("skinstric_analysis") || "{}"); } catch { return {}; } })();
+  const data = (state?.data && Object.keys(state.data).length > 0) ? state.data : savedData;
+  const imageDataUrl = state?.imageDataUrl || sessionStorage.getItem("skinstric_image") || "";
 
   return (
     <div style={s.screen}>

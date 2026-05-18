@@ -30,6 +30,7 @@ export default function PreparingPage() {
             : Promise.resolve(null),
         ]);
         const data = res2 ? await res2.json() : {};
+        sessionStorage.setItem("skinstric_analysis", JSON.stringify(data));
         navigate("/analysis", { state: { data, imageDataUrl } });
       } catch {
         navigate("/analysis", { state: { data: {}, imageDataUrl } });

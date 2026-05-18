@@ -4,8 +4,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 export default function DemographicsPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const data = state?.data || {};
-  const imageDataUrl = state?.imageDataUrl || "";
+  const savedData = (() => { try { return JSON.parse(sessionStorage.getItem("skinstric_analysis") || "{}"); } catch { return {}; } })();
+  const data = (state?.data && Object.keys(state.data).length > 0) ? state.data : savedData;
+  const imageDataUrl = state?.imageDataUrl || sessionStorage.getItem("skinstric_image") || "";
 
   const race = sortDesc(data.race ?? data.Race ?? data.predictions?.race ?? {});
   const age = sortDesc(data.age ?? data.Age ?? data.predictions?.age ?? {});
