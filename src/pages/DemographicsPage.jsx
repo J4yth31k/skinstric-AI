@@ -12,10 +12,11 @@ export default function DemographicsPage() {
   const data = (state?.data && Object.keys(state.data).length > 0) ? state.data : savedData;
   const imageDataUrl = state?.imageDataUrl || sessionStorage.getItem("skinstric_image") || "";
 
-  const raw = data?.predictions ?? data?.outputs?.[0]?.data ?? data ?? {};
-  const race   = sortDesc(raw.race   ?? raw.Race   ?? data.race   ?? data.Race   ?? {});
-  const age    = sortDesc(raw.age    ?? raw.Age    ?? data.age    ?? data.Age    ?? {});
-  const gender = sortDesc(raw.gender ?? raw.Gender ?? raw.sex ?? raw.Sex ?? data.gender ?? data.Gender ?? {});
+  // API returns { success, data: { race, age, gender } }
+  const raw = data?.data ?? data?.predictions ?? data ?? {};
+  const race   = sortDesc(raw.race   ?? raw.Race   ?? {});
+  const age    = sortDesc(raw.age    ?? raw.Age    ?? {});
+  const gender = sortDesc(raw.gender ?? raw.Gender ?? raw.sex ?? raw.Sex ?? {});
 
   const tabs = { RACE: race, AGE: age, SEX: gender };
 
