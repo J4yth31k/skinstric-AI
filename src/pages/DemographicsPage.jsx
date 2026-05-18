@@ -5,18 +5,22 @@ export default function DemographicsPage() {
   const navigate = useNavigate();
   const { state } = useLocation();
 
-  const savedData = (() => {
-    try { return JSON.parse(sessionStorage.getItem("skinstric_analysis") || "{}"); }
-    catch { return {}; }
-  })();
-  const data = (state?.data && Object.keys(state.data).length > 0) ? state.data : savedData;
-  const imageDataUrl = state?.imageDataUrl || sessionStorage.getItem("skinstric_image") || "";
+  const imageDataUrl = sessionStorage.getItem("skinstric_image") || "";
 
-  // API returns { success, data: { race, age, gender } }
-  const raw = data?.data ?? data?.predictions ?? data ?? {};
+  // Read directly from sessionStorage — most reliable across navigation
+  const raw = (() => {
+    try {
+      const stored = sessionStorage.getItem("skinstric_analysis");
+      if (!stored) return {};
+      const parsed = JSON.parse(stored);
+      // API returns { success, data: { race, age, gender } }
+      return parsed?.data ?? parsed ?? {};
+    } catch { return {}; }
+  })();
+
   const race   = sortDesc(raw.race   ?? raw.Race   ?? {});
   const age    = sortDesc(raw.age    ?? raw.Age    ?? {});
-  const gender = sortDesc(raw.gender ?? raw.Gender ?? raw.sex ?? raw.Sex ?? {});
+  const gender = sortDesc(raw.gender ?? raw.Gender ?? raw.sex ?? {});
 
   const tabs = { RACE: race, AGE: age, SEX: gender };
 
@@ -33,7 +37,7 @@ export default function DemographicsPage() {
 
   const confirm = () => {
     localStorage.setItem("skinstric_demographics", JSON.stringify(selected));
-    navigate("/analysis", { state: { data, imageDataUrl } });
+    navigate("/analysis", { state: { imageDataUrl } });
   };
 
   const reset = () => {
@@ -60,7 +64,7 @@ export default function DemographicsPage() {
           <div style={s.titleRow}>
             <MiniDiamond dir="left" onClick={() => navigate(-1)} />
             <h1 style={s.heading}>DEMOGRAPHICS</h1>
-            <MiniDiamond onClick={() => navigate("/analysis", { state: { data, imageDataUrl } })} />
+            <MiniDiamond onClick={() => navigate("/analysis", { state: { imageDataUrl } })} />
           </div>
           <p style={s.subLabel}>PREDICTED RACE &amp; AGE</p>
         </div>
@@ -124,7 +128,7 @@ export default function DemographicsPage() {
       </main>
 
       <nav style={s.nav}>
-        <button style={s.backBtn} onClick={() => navigate("/analysis", { state: { data, imageDataUrl } })}>
+        <button style={s.backBtn} onClick={() => navigate("/analysis", { state: { imageDataUrl } })}>
           <NavDiamond dir="left" /><span>BACK</span>
         </button>
         <div style={s.actionBtns}>
