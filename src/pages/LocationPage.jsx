@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 export default function LocationPage() {
   const navigate = useNavigate();
   const [location, setLocation] = useState(() => localStorage.getItem("skinstric_location") || "");
-  const [focused, setFocused] = useState(false);
   const inputRef = useRef(null);
 
   const proceed = () => {
@@ -25,8 +24,6 @@ export default function LocationPage() {
 
       <main style={s.body} onClick={() => inputRef.current?.focus()}>
         <p style={s.startLabel}>TO START ANALYSIS</p>
-
-        {focused && <div style={s.focusDot} />}
 
         <div style={s.diamondWrap}>
           <div style={s.diamond}>
@@ -51,8 +48,6 @@ export default function LocationPage() {
           style={s.hidden}
           value={location}
           onChange={(e) => setLocation(e.target.value)}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
           onKeyDown={(e) => e.key === "Enter" && proceed()}
           autoFocus
         />
@@ -92,7 +87,6 @@ const s = {
   tag: { fontSize: 11, color: "rgba(26,27,28,0.5)", letterSpacing: "0.06em" },
   body: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", cursor: "text", position: "relative", padding: 24 },
   startLabel: { position: "absolute", top: 20, left: 28, fontSize: 9, fontWeight: 600, letterSpacing: "0.14em", color: "rgba(26,27,28,0.5)", textTransform: "uppercase" },
-  focusDot: { position: "absolute", left: 0, top: "50%", transform: "translateY(-50%)", width: 10, height: 10, borderRadius: "50%", background: "#4a90e2" },
   diamondWrap: { display: "flex", alignItems: "center", justifyContent: "center" },
   diamond: { width: 230, height: 230, transform: "rotate(45deg)", border: "1px dashed rgba(26,27,28,0.3)", display: "flex", alignItems: "center", justifyContent: "center" },
   inner: { transform: "rotate(-45deg)", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, textAlign: "center", padding: "0 44px" },
