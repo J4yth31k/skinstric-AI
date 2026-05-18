@@ -5,6 +5,7 @@ export default function ImageChoicePage() {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
   const [showModal, setShowModal] = useState(false);
+  const [preview, setPreview] = useState(null);
 
   const handleGallery = (e) => {
     const file = e.target.files?.[0];
@@ -21,12 +22,46 @@ export default function ImageChoicePage() {
         canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
         const resized = canvas.toDataURL("image/jpeg", 0.8);
         sessionStorage.setItem("skinstric_image", resized);
-        navigate("/preparing");
+        setPreview(resized);
       };
+      img.onerror = () => alert("Could not load image. Please try another file.");
       img.src = ev.target.result;
     };
     reader.readAsDataURL(file);
   };
+
+  // Preview screen — matches slide 013 style
+  if (preview) {
+    return (
+      <div style={ps.screen}>
+        <header style={ps.header}>
+          <div style={ps.hl}>
+            <span style={ps.brand}>SKINSTRIC</span>
+            <span style={ps.tag}>[ ANALYSIS ]</span>
+          </div>
+        </header>
+        <div style={ps.imgWrap}>
+          <img src={preview} alt="uploaded" style={ps.img} />
+          <div style={ps.tips}>
+            <span style={ps.tipsLabel}>TO GET BETTER RESULTS MAKE SURE TO HAVE:</span>
+            <div style={ps.tipsList}>
+              {["NEUTRAL EXPRESSION", "FRONTAL POSE", "ADEQUATE LIGHTING"].map((t) => (
+                <span key={t} style={ps.tip}>◇ {t}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+        <nav style={ps.nav}>
+          <button style={ps.backBtn} onClick={() => setPreview(null)}>
+            <NavDiamondLight dir="left" /><span>BACK</span>
+          </button>
+          <button style={ps.proceedBtn} onClick={() => navigate("/preparing")}>
+            <span>PROCEED</span><NavDiamondLight />
+          </button>
+        </nav>
+      </div>
+    );
+  }
 
   const handleAllow = () => {
     setShowModal(false);
@@ -143,6 +178,34 @@ function NavDiamond({ dir }) {
     </span>
   );
 }
+
+function NavDiamondLight({ dir }) {
+  return (
+    <span style={{ display: "inline-block", width: 20, height: 20, border: "1.5px solid #fcfcfc", transform: "rotate(45deg)", position: "relative", flexShrink: 0 }}>
+      <span style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%) rotate(-45deg)", fontSize: 9, color: "#fcfcfc", lineHeight: 1 }}>
+        {dir === "left" ? "←" : "→"}
+      </span>
+    </span>
+  );
+}
+
+// Preview screen styles (dark, matches camera slide 013)
+const ps = {
+  screen: { background: "#000", minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: "'DM Sans','Inter',sans-serif", color: "#fcfcfc", position: "relative" },
+  header: { position: "absolute", top: 0, left: 0, right: 0, display: "flex", alignItems: "center", padding: "0 28px", height: 48, zIndex: 10 },
+  hl: { display: "flex", alignItems: "center", gap: 10 },
+  brand: { fontSize: 12, fontWeight: 600, letterSpacing: "0.1em", color: "#fcfcfc" },
+  tag: { fontSize: 11, color: "rgba(252,252,252,0.5)", letterSpacing: "0.06em" },
+  imgWrap: { flex: 1, position: "relative", minHeight: "100vh", overflow: "hidden" },
+  img: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" },
+  tips: { position: "absolute", bottom: 56, left: 0, right: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, zIndex: 10 },
+  tipsLabel: { fontSize: 8, letterSpacing: "0.1em", color: "rgba(252,252,252,0.5)", textTransform: "uppercase" },
+  tipsList: { display: "flex", gap: 24 },
+  tip: { fontSize: 8, letterSpacing: "0.1em", color: "rgba(252,252,252,0.4)", textTransform: "uppercase" },
+  nav: { position: "absolute", bottom: 12, left: 0, right: 0, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 28px", zIndex: 10 },
+  backBtn: { display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", color: "rgba(252,252,252,0.6)", textTransform: "uppercase" },
+  proceedBtn: { display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", color: "#fcfcfc", textTransform: "uppercase" },
+};
 
 const s = {
   screen: { background: "#fcfcfc", minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: "'DM Sans','Inter',sans-serif", border: "1px solid #1a1b1c", position: "relative" },
