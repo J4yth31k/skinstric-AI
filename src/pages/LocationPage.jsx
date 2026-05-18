@@ -16,8 +16,10 @@ export default function LocationPage() {
   };
 
   return (
-    <div style={s.screen}>
-      <header style={s.header}>
+    <div style={s.screen} onClick={() => inputRef.current?.focus()}>
+      <style>{`#location-input::placeholder { color: rgba(26,27,28,0.35); font-weight: 300; }`}</style>
+
+      <header style={s.header} onClick={(e) => e.stopPropagation()}>
         <div style={s.hl}>
           <span style={s.brand}>SKINSTRIC</span>
           <span style={s.tag}>[ INTRO ]</span>
@@ -27,34 +29,41 @@ export default function LocationPage() {
       <main style={s.body}>
         <p style={s.startLabel}>TO START ANALYSIS</p>
 
-        <div style={s.diamondWrap}>
-          <input
-            ref={inputRef}
-            autoFocus
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && proceed()}
-            style={s.overlayInput}
-          />
-          <div style={s.diamond}>
-            <div style={s.inner}>
-              {location ? (
-                <>
-                  <span style={s.activeLabel}>WHERE ARE YOU FROM?</span>
-                  <span style={s.typed}>{location}</span>
-                </>
-              ) : (
-                <>
-                  <span style={s.clickLabel}>CLICK TO TYPE</span>
-                  <span style={s.placeholder}>Where are you from?</span>
-                </>
-              )}
-            </div>
+        <div style={s.diamond}>
+          <div style={s.inner}>
+            {location
+              ? <span style={s.activeLabel}>WHERE ARE YOU FROM?</span>
+              : <span style={s.clickLabel}>CLICK TO TYPE</span>
+            }
+            <input
+              id="location-input"
+              ref={inputRef}
+              value={location}
+              placeholder="Where are you from?"
+              onChange={(e) => setLocation(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && proceed()}
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                background: "transparent",
+                border: "none",
+                borderBottom: location ? "1.5px solid #1a1b1c" : "none",
+                outline: "none",
+                fontSize: 28,
+                fontWeight: 300,
+                color: "#1a1b1c",
+                fontFamily: "'DM Sans','Inter',sans-serif",
+                textAlign: "center",
+                width: 210,
+                caretColor: "#1a1b1c",
+                letterSpacing: "-0.01em",
+                padding: "0 0 2px 0",
+              }}
+            />
           </div>
         </div>
       </main>
 
-      <nav style={s.nav}>
+      <nav style={s.nav} onClick={(e) => e.stopPropagation()}>
         <button style={s.backBtn} onClick={() => navigate("/intro")}>
           <NavDiamond dir="left" /><span>BACK</span>
         </button>
@@ -79,22 +88,18 @@ function NavDiamond({ dir }) {
 }
 
 const s = {
-  screen: { background: "#fcfcfc", minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: "'DM Sans','Inter',sans-serif", border: "1px solid #1a1b1c" },
-  header: { display: "flex", alignItems: "center", padding: "0 28px", height: 52, borderBottom: "1px solid rgba(26,27,28,0.12)" },
+  screen: { background: "#fcfcfc", minHeight: "100vh", display: "flex", flexDirection: "column", fontFamily: "'DM Sans','Inter',sans-serif", border: "1px solid #1a1b1c", cursor: "text" },
+  header: { display: "flex", alignItems: "center", padding: "0 28px", height: 52, borderBottom: "1px solid rgba(26,27,28,0.12)", cursor: "default" },
   hl: { display: "flex", alignItems: "center", gap: 10 },
   brand: { fontSize: 12, fontWeight: 600, letterSpacing: "0.1em", color: "#1a1b1c" },
   tag: { fontSize: 11, color: "rgba(26,27,28,0.5)", letterSpacing: "0.06em" },
   body: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "relative" },
   startLabel: { position: "absolute", top: 20, left: 28, fontSize: 9, fontWeight: 600, letterSpacing: "0.14em", color: "rgba(26,27,28,0.5)", textTransform: "uppercase" },
-  diamondWrap: { position: "relative", width: 326, height: 326, display: "flex", alignItems: "center", justifyContent: "center" },
-  overlayInput: { position: "absolute", inset: 0, opacity: 0, cursor: "text", border: "none", background: "transparent", zIndex: 2, fontSize: 16 },
   diamond: { width: 230, height: 230, transform: "rotate(45deg)", border: "1px dashed rgba(26,27,28,0.3)", display: "flex", alignItems: "center", justifyContent: "center" },
-  inner: { transform: "rotate(-45deg)", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, textAlign: "center", padding: "0 44px", pointerEvents: "none" },
-  clickLabel: { fontSize: 8, letterSpacing: "0.16em", color: "rgba(26,27,28,0.35)", textTransform: "uppercase" },
-  activeLabel: { fontSize: 8, letterSpacing: "0.14em", color: "rgba(26,27,28,0.4)", textTransform: "uppercase" },
-  placeholder: { fontSize: 28, fontWeight: 300, color: "#1a1b1c", whiteSpace: "nowrap" },
-  typed: { fontSize: 28, fontWeight: 300, color: "#1a1b1c", borderBottom: "1.5px solid #1a1b1c", paddingBottom: 2, whiteSpace: "nowrap" },
-  nav: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 28px" },
+  inner: { transform: "rotate(-45deg)", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, textAlign: "center" },
+  clickLabel: { fontSize: 8, letterSpacing: "0.16em", color: "rgba(26,27,28,0.35)", textTransform: "uppercase", pointerEvents: "none" },
+  activeLabel: { fontSize: 8, letterSpacing: "0.14em", color: "rgba(26,27,28,0.4)", textTransform: "uppercase", pointerEvents: "none" },
+  nav: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 28px", cursor: "default" },
   backBtn: { display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", color: "rgba(26,27,28,0.5)", textTransform: "uppercase" },
   proceedBtn: { display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", color: "#1a1b1c", textTransform: "uppercase" },
 };
