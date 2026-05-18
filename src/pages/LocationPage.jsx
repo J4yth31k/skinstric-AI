@@ -1,10 +1,12 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function LocationPage() {
   const navigate = useNavigate();
   const [location, setLocation] = useState(() => localStorage.getItem("skinstric_location") || "");
   const inputRef = useRef(null);
+
+  useEffect(() => { inputRef.current?.focus(); }, []);
 
   const proceed = () => {
     const trimmed = location.trim();
@@ -84,7 +86,7 @@ const s = {
   tag: { fontSize: 11, color: "rgba(26,27,28,0.5)", letterSpacing: "0.06em" },
   body: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "relative" },
   startLabel: { position: "absolute", top: 20, left: 28, fontSize: 9, fontWeight: 600, letterSpacing: "0.14em", color: "rgba(26,27,28,0.5)", textTransform: "uppercase" },
-  diamondWrap: { position: "relative", display: "flex", alignItems: "center", justifyContent: "center" },
+  diamondWrap: { position: "relative", width: 326, height: 326, display: "flex", alignItems: "center", justifyContent: "center" },
   overlayInput: { position: "absolute", inset: 0, opacity: 0, cursor: "text", border: "none", background: "transparent", zIndex: 2, fontSize: 16 },
   diamond: { width: 230, height: 230, transform: "rotate(45deg)", border: "1px dashed rgba(26,27,28,0.3)", display: "flex", alignItems: "center", justifyContent: "center" },
   inner: { transform: "rotate(-45deg)", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, textAlign: "center", padding: "0 44px", pointerEvents: "none" },
