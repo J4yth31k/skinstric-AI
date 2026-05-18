@@ -8,9 +8,13 @@ export default function DemographicsPage() {
   const data = (state?.data && Object.keys(state.data).length > 0) ? state.data : savedData;
   const imageDataUrl = state?.imageDataUrl || sessionStorage.getItem("skinstric_image") || "";
 
-  const race = sortDesc(data.race ?? data.Race ?? data.predictions?.race ?? {});
-  const age = sortDesc(data.age ?? data.Age ?? data.predictions?.age ?? {});
-  const gender = sortDesc(data.gender ?? data.Gender ?? data.predictions?.gender ?? {});
+  // Handle all known API response shapes
+  const raw = data?.predictions ?? data?.outputs?.[0]?.data ?? data ?? {};
+  const race = sortDesc(raw.race ?? raw.Race ?? data.race ?? data.Race ?? {});
+  const age = sortDesc(raw.age ?? raw.Age ?? data.age ?? data.Age ?? {});
+  const gender = sortDesc(raw.gender ?? raw.Gender ?? raw.sex ?? raw.Sex ?? data.gender ?? data.Gender ?? {});
+
+  console.log("Demographics data:", { raw, race, age, gender });
 
   const [activeTab, setActiveTab] = useState("RACE");
   const [selected, setSelected] = useState({
@@ -93,9 +97,14 @@ export default function DemographicsPage() {
                     <DiamondBullet filled={isSelected} />
                     <span style={{ ...s.rowLabel, color: isSelected ? "#fcfcfc" : "#1a1b1c" }}>{label}</span>
                   </div>
-                  <span style={{ ...s.rowScore, color: isSelected ? "#fcfcfc" : "rgba(26,27,28,0.5)" }}>
-                    {(score * 100).toFixed(1)}%
-                  </span>
+                  <div style={s.rowRight}>
+                    <div style={s.barTrack}>
+                      <div style={{ ...s.barFill, width: `${Math.round(score * 100)}%`, background: isSelected ? "#fcfcfc" : "#1a1b1c" }} />
+                    </div>
+                    <span style={{ ...s.rowScore, color: isSelected ? "#fcfcfc" : "#1a1b1c" }}>
+                      {(score * 100).toFixed(1)}%
+                    </span>
+                  </div>
                 </div>
               );
             })}
@@ -192,9 +201,12 @@ const s = {
   tableHeader: { display: "flex", justifyContent: "space-between", padding: "6px 12px", borderBottom: "1px solid rgba(26,27,28,0.1)" },
   tableHeaderCell: { fontSize: 9, fontWeight: 600, letterSpacing: "0.12em", color: "rgba(26,27,28,0.4)", textTransform: "uppercase" },
   tableRow: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 12px", borderBottom: "1px solid rgba(26,27,28,0.06)", transition: "background 0.12s" },
-  rowLeft: { display: "flex", alignItems: "center", gap: 10 },
+  rowLeft: { display: "flex", alignItems: "center", gap: 10, minWidth: 120 },
+  rowRight: { display: "flex", alignItems: "center", gap: 10, flex: 1, justifyContent: "flex-end" },
+  barTrack: { width: 80, height: 2, background: "rgba(26,27,28,0.1)", borderRadius: 1, overflow: "hidden" },
+  barFill: { height: "100%", borderRadius: 1, transition: "width 0.4s ease" },
   rowLabel: { fontSize: 11, letterSpacing: "0.04em" },
-  rowScore: { fontSize: 10, fontFamily: "monospace", letterSpacing: "0.04em" },
+  rowScore: { fontSize: 11, fontFamily: "monospace", letterSpacing: "0.04em", minWidth: 44, textAlign: "right" },
   hint: { fontSize: 9, letterSpacing: "0.08em", color: "rgba(26,27,28,0.35)", textTransform: "uppercase", textAlign: "center" },
   nav: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 28px", borderTop: "1px solid rgba(26,27,28,0.08)" },
   backBtn: { display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", color: "rgba(26,27,28,0.5)", textTransform: "uppercase" },
