@@ -8,6 +8,8 @@ export default function DemographicsPage() {
   const imageDataUrl = sessionStorage.getItem("skinstric_image") || "";
 
   // Read directly from sessionStorage — most reliable across navigation
+  const _rawStored = sessionStorage.getItem("skinstric_analysis") || "EMPTY";
+
   const raw = (() => {
     try {
       const stored = sessionStorage.getItem("skinstric_analysis");
@@ -125,6 +127,11 @@ export default function DemographicsPage() {
         </div>
 
         <p style={s.hint}>IF A.I. ESTIMATE IS WRONG, SELECT THE CORRECT ONE.</p>
+
+        {/* TEMP DEBUG — remove after fixing */}
+        <pre style={{ fontSize: 9, color: "red", wordBreak: "break-all", whiteSpace: "pre-wrap", margin: "8px 0", padding: "8px", background: "#fff0f0", border: "1px solid red" }}>
+          RAW STORAGE: {_rawStored.slice(0, 400)}
+        </pre>
       </main>
 
       <nav style={s.nav}>
