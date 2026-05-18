@@ -22,10 +22,19 @@ export default function IntroducePage() {
         </div>
       </header>
 
-      <main style={s.body} onClick={() => inputRef.current?.focus()}>
+      <main style={s.body}>
         <p style={s.startLabel}>TO START ANALYSIS</p>
 
         <div style={s.diamondWrap}>
+          {/* Transparent input overlays the entire diamond so any click focuses it */}
+          <input
+            ref={inputRef}
+            autoFocus
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && proceed()}
+            style={s.overlayInput}
+          />
           <div style={s.diamond}>
             <div style={s.inner}>
               {!name && <span style={s.clickLabel}>CLICK TO TYPE</span>}
@@ -35,26 +44,15 @@ export default function IntroducePage() {
             </div>
           </div>
         </div>
-
-        <input
-          ref={inputRef}
-          style={s.hidden}
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && proceed()}
-          autoFocus
-        />
       </main>
 
       <nav style={s.nav}>
         <button style={s.backBtn} onClick={() => navigate("/")}>
-          <NavDiamond dir="left" />
-          <span>BACK</span>
+          <NavDiamond dir="left" /><span>BACK</span>
         </button>
         {name.trim() && (
           <button style={s.proceedBtn} onClick={proceed}>
-            <span>PROCEED</span>
-            <NavDiamond />
+            <span>PROCEED</span><NavDiamond />
           </button>
         )}
       </nav>
@@ -78,15 +76,15 @@ const s = {
   hl: { display: "flex", alignItems: "center", gap: 10 },
   brand: { fontSize: 12, fontWeight: 600, letterSpacing: "0.1em", color: "#1a1b1c" },
   tag: { fontSize: 11, color: "rgba(26,27,28,0.5)", letterSpacing: "0.06em" },
-  body: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", cursor: "text", position: "relative", padding: 24 },
+  body: { flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", position: "relative" },
   startLabel: { position: "absolute", top: 20, left: 28, fontSize: 9, fontWeight: 600, letterSpacing: "0.14em", color: "rgba(26,27,28,0.5)", textTransform: "uppercase" },
-  diamondWrap: { display: "flex", alignItems: "center", justifyContent: "center" },
+  diamondWrap: { position: "relative", display: "flex", alignItems: "center", justifyContent: "center" },
+  overlayInput: { position: "absolute", inset: 0, opacity: 0, cursor: "text", border: "none", background: "transparent", zIndex: 2, fontSize: 16 },
   diamond: { width: 230, height: 230, transform: "rotate(45deg)", border: "1px dashed rgba(26,27,28,0.3)", display: "flex", alignItems: "center", justifyContent: "center" },
-  inner: { transform: "rotate(-45deg)", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, textAlign: "center", padding: "0 44px" },
+  inner: { transform: "rotate(-45deg)", display: "flex", flexDirection: "column", alignItems: "center", gap: 8, textAlign: "center", padding: "0 44px", pointerEvents: "none" },
   clickLabel: { fontSize: 8, letterSpacing: "0.16em", color: "rgba(26,27,28,0.35)", textTransform: "uppercase" },
   placeholder: { fontSize: 28, fontWeight: 300, color: "#1a1b1c", whiteSpace: "nowrap" },
   typed: { fontSize: 28, fontWeight: 300, color: "#1a1b1c", borderBottom: "1.5px solid #1a1b1c", paddingBottom: 2, whiteSpace: "nowrap" },
-  hidden: { position: "fixed", opacity: 0, pointerEvents: "none", width: 1, height: 1 },
   nav: { display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 28px" },
   backBtn: { display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", color: "rgba(26,27,28,0.5)", textTransform: "uppercase" },
   proceedBtn: { display: "flex", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", fontSize: 10, fontWeight: 600, letterSpacing: "0.1em", color: "#1a1b1c", textTransform: "uppercase" },

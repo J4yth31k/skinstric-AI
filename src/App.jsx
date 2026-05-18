@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import IntroducePage from "./pages/IntroducePage";
 import LocationPage from "./pages/LocationPage";
@@ -19,6 +19,10 @@ export default function App() {
       <Route path="/preparing" element={<PreparingPage />} />
       <Route path="/analysis" element={<AnalysisHubPage />} />
       <Route path="/analysis/demographics" element={<DemographicsPage />} />
+      {/* Stub routes — redirect to demographics until those pages are built */}
+      <Route path="/analysis/skin-type" element={<Navigate to="/analysis/demographics" replace />} />
+      <Route path="/analysis/cosmetic" element={<Navigate to="/analysis/demographics" replace />} />
+      <Route path="/analysis/weather" element={<Navigate to="/analysis/demographics" replace />} />
     </Routes>
   );
 }
