@@ -17,6 +17,7 @@ export default function App() {
       <Route path="/upload-choice" element={<ImageChoicePage />} />
       <Route path="/camera" element={<CameraPage />} />
       <Route path="/preparing" element={<PreparingPage />} />
+      <Route path="/analysis/preparing" element={<PreparingPage />} />
       <Route path="/analysis" element={<AnalysisHubPage />} />
       <Route path="/analysis/demographics" element={<DemographicsPage />} />
       {/* Stub routes — redirect to demographics until those pages are built */}
