@@ -12,7 +12,7 @@ export default function CameraPage() {
   useEffect(() => {
     let active = true;
     navigator.mediaDevices
-      .getUserMedia({ video: { facingMode: "user" } })
+      .getUserMedia({ video: { facingMode: "user", width: { ideal: 1280 }, height: { ideal: 720 } } })
       .then((stream) => {
         if (!active) { stream.getTracks().forEach((t) => t.stop()); return; }
         streamRef.current = stream;
@@ -33,13 +33,12 @@ export default function CameraPage() {
     const canvas = canvasRef.current;
     if (!video || !canvas) return;
 
-    // Resize to max 800px wide so the image stays under API/storage limits
-    const MAX = 800;
+    const MAX = 1024;
     const ratio = Math.min(MAX / video.videoWidth, MAX / video.videoHeight, 1);
     canvas.width = Math.round(video.videoWidth * ratio);
     canvas.height = Math.round(video.videoHeight * ratio);
     canvas.getContext("2d").drawImage(video, 0, 0, canvas.width, canvas.height);
-    const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+    const dataUrl = canvas.toDataURL("image/jpeg", 0.92);
 
     setCaptured(dataUrl);
     streamRef.current?.getTracks().forEach((t) => t.stop());

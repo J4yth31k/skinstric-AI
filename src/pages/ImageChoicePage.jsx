@@ -14,13 +14,13 @@ export default function ImageChoicePage() {
     reader.onload = (ev) => {
       const img = new Image();
       img.onload = () => {
-        const MAX = 800;
+        const MAX = 1024;
         const ratio = Math.min(MAX / img.width, MAX / img.height, 1);
         const canvas = document.createElement("canvas");
         canvas.width = Math.round(img.width * ratio);
         canvas.height = Math.round(img.height * ratio);
         canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
-        const resized = canvas.toDataURL("image/jpeg", 0.8);
+        const resized = canvas.toDataURL("image/jpeg", 0.92);
         try {
           sessionStorage.setItem("skinstric_image", resized);
         } catch {
