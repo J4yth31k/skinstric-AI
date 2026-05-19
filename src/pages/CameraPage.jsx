@@ -49,7 +49,7 @@ export default function CameraPage() {
   const proceed = () => {
     if (!captured) return;
     sessionStorage.setItem("skinstric_image", captured);
-    navigate("/preparing");
+    navigate("/analysis/preparing");
   };
 
   // Slide 011 — Setting up camera

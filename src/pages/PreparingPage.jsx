@@ -13,7 +13,11 @@ export default function PreparingPage() {
       const name      = localStorage.getItem("skinstric_name") || "";
       const location  = localStorage.getItem("skinstric_location") || "";
       const imageDataUrl = sessionStorage.getItem("skinstric_image") || "";
-      const imageBase64  = imageDataUrl.replace(/^data:image\/[a-z+]+;base64,/, "");
+      // split(",")[1] safely extracts raw base64 regardless of MIME type
+      const imageBase64  = imageDataUrl.includes(",") ? imageDataUrl.split(",")[1] : "";
+
+      // Clear stale analysis so a failed retry never shows old results
+      sessionStorage.removeItem("skinstric_analysis");
 
       // Phase One — fire and forget (registration, not needed for analysis)
       fetch(PHASE_ONE_URL, {

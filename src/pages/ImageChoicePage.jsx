@@ -21,7 +21,12 @@ export default function ImageChoicePage() {
         canvas.height = Math.round(img.height * ratio);
         canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
         const resized = canvas.toDataURL("image/jpeg", 0.8);
-        sessionStorage.setItem("skinstric_image", resized);
+        try {
+          sessionStorage.setItem("skinstric_image", resized);
+        } catch {
+          alert("Image is too large to process. Please try a smaller photo.");
+          return;
+        }
         setPreview(resized);
       };
       img.onerror = () => alert("Could not load image. Please try another file.");
@@ -55,7 +60,7 @@ export default function ImageChoicePage() {
           <button style={ps.backBtn} onClick={() => setPreview(null)}>
             <NavDiamondLight dir="left" /><span>BACK</span>
           </button>
-          <button style={ps.proceedBtn} onClick={() => navigate("/preparing")}>
+          <button style={ps.proceedBtn} onClick={() => navigate("/analysis/preparing")}>
             <span>PROCEED</span><NavDiamondLight />
           </button>
         </nav>
