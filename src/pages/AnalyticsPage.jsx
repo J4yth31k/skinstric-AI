@@ -87,7 +87,7 @@ export default function AnalyticsPage() {
       localStorage.setItem("skinstric_race", race.trim());
       localStorage.setItem("skinstric_age", age);
 
-      navigate("/results");
+      navigate("/upload");
     } catch (err) {
       setApiError("Failed to submit. Please try again.");
     } finally {
