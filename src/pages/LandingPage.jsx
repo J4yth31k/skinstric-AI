@@ -17,7 +17,7 @@ export default function LandingPage() {
 
       <main style={styles.body}>
         <div style={styles.leftNav}>
-          <button style={styles.navBtn} aria-label="Previous">
+          <button style={styles.navBtn} aria-label="Previous" onClick={() => navigate("/intro")}>
             <Diamond direction="left" />
           </button>
           <span style={styles.navLabel}>INTRODUCING AI</span>
@@ -31,7 +31,7 @@ export default function LandingPage() {
 
         <div style={styles.rightNav}>
           <span style={styles.navLabel}>LEARN MORE</span>
-          <button style={styles.navBtn} aria-label="Next">
+          <button style={styles.navBtn} aria-label="Next" onClick={() => navigate("/intro")}>
             <Diamond direction="right" />
           </button>
         </div>
