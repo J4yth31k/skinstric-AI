@@ -48,7 +48,7 @@ export default function DemographicsPage() {
   };
 
   return (
-    <div style={s.screen}>
+    <div style={s.screen} className="demo-screen">
       <header style={s.header}>
         <div style={s.hl}>
           <span style={s.brand}>SKINSTRIC</span>
@@ -62,15 +62,15 @@ export default function DemographicsPage() {
           <p style={s.sectionLabel}>A.I. ANALYSIS</p>
           <div style={s.titleRow}>
             <MiniDiamond dir="left" onClick={() => navigate(-1)} />
-            <h1 style={s.heading}>DEMOGRAPHICS</h1>
+            <h1 style={s.heading} className="demo-heading">DEMOGRAPHICS</h1>
             <MiniDiamond onClick={() => navigate("/analysis", { state: { imageDataUrl } })} />
           </div>
           <p style={s.subLabel}>PREDICTED RACE &amp; AGE</p>
         </div>
 
-        <div style={s.columns}>
+        <div style={s.columns} className="demo-columns">
           {/* Left sidebar — predicted values */}
-          <aside style={s.sidebar}>
+          <aside style={s.sidebar} className="demo-sidebar">
             {[
               { tab: "RACE", value: selected.RACE },
               { tab: "AGE",  value: selected.AGE  },
@@ -91,12 +91,12 @@ export default function DemographicsPage() {
           </aside>
 
           {/* Center — donut chart */}
-          <div style={s.chartWrap}>
+          <div style={s.chartWrap} className="demo-chart-wrap">
             <DonutChart score={topScore} pct={topPct} />
           </div>
 
           {/* Right — confidence table */}
-          <div style={s.tableWrap}>
+          <div style={s.tableWrap} className="demo-table-wrap">
             <div style={s.tableHeader}>
               <span style={s.tableHeaderCell}>{activeTab}</span>
               <span style={s.tableHeaderCell}>A. I. CONFIDENCE</span>

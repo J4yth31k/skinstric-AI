@@ -16,7 +16,7 @@ export default function LocationPage() {
   };
 
   return (
-    <div style={s.screen} onClick={() => inputRef.current?.focus()}>
+    <div style={s.screen} className="intro-screen" onClick={() => inputRef.current?.focus()}>
       <style>{`#location-input::placeholder { color: rgba(26,27,28,0.35); font-weight: 300; }`}</style>
 
       <header style={s.header} onClick={(e) => e.stopPropagation()}>
@@ -29,7 +29,7 @@ export default function LocationPage() {
       <main style={s.body}>
         <p style={s.startLabel}>TO START ANALYSIS</p>
 
-        <div style={s.diamond}>
+        <div style={s.diamond} className="intro-diamond">
           <div style={s.inner}>
             {location
               ? <span style={s.activeLabel}>WHERE ARE YOU FROM?</span>

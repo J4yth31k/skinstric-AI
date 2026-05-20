@@ -74,7 +74,7 @@ export default function ImageChoicePage() {
   };
 
   return (
-    <div style={s.screen}>
+    <div style={s.screen} className="ic-screen">
       <header style={s.header}>
         <div style={s.hl}>
           <span style={s.brand}>SKINSTRIC</span>
@@ -85,10 +85,10 @@ export default function ImageChoicePage() {
       <main style={s.body}>
         <p style={s.startLabel}>TO START ANALYSIS</p>
 
-        <div style={s.choices}>
+        <div style={s.choices} className="ic-choices">
           {/* Camera option */}
           <div style={s.option} onClick={() => setShowModal(true)}>
-            <div style={s.diamond}>
+            <div style={s.diamond} className="ic-diamond">
               <div style={s.inner}>
                 <ApertureIcon />
                 <span style={s.optionLabel}>ALLOW A.I.<br />TO SCAN YOUR FACE</span>
@@ -98,7 +98,7 @@ export default function ImageChoicePage() {
 
           {/* Gallery option */}
           <div style={s.option} onClick={() => fileInputRef.current?.click()}>
-            <div style={s.diamond}>
+            <div style={s.diamond} className="ic-diamond">
               <div style={s.inner}>
                 <GalleryIcon />
                 <span style={s.optionLabel}>ALLOW A.I.<br />ACCESS GALLERY</span>

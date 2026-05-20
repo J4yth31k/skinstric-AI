@@ -15,7 +15,7 @@ export default function AnalysisHubPage() {
   const imageDataUrl = state?.imageDataUrl || sessionStorage.getItem("skinstric_image") || "";
 
   return (
-    <div style={s.screen}>
+    <div style={s.screen} className="hub-screen">
       <header style={s.header}>
         <div style={s.hl}>
           <span style={s.brand}>SKINSTRIC</span>
@@ -23,15 +23,15 @@ export default function AnalysisHubPage() {
         </div>
       </header>
 
-      <main style={s.body}>
-        <div style={s.info}>
+      <main style={s.body} className="hub-body">
+        <div style={s.info} className="hub-info">
           <p style={s.infoTitle}>A.I. ANALYSIS</p>
           <p style={s.infoSub}>A.I. HAS ESTIMATED THE FOLLOWING.</p>
           <p style={s.infoSub}>FIX ESTIMATED INFORMATION IF NEEDED.</p>
         </div>
 
         <div style={s.hubWrap}>
-          <div style={s.outerDiamond}>
+          <div style={s.outerDiamond} className="hub-outer">
             {CATEGORIES.map(({ key, label, dx, dy }) => (
               <InnerDiamond
                 key={key}

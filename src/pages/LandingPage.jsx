@@ -4,7 +4,7 @@ export default function LandingPage() {
   const navigate = useNavigate();
 
   return (
-    <div style={styles.screen}>
+    <div style={styles.screen} className="landing-screen">
       <header style={styles.header}>
         <div style={styles.headerLeft}>
           <span style={styles.brand}>SKINSTRIC</span>
@@ -15,22 +15,22 @@ export default function LandingPage() {
         </button>
       </header>
 
-      <main style={styles.body}>
-        <div style={styles.leftNav}>
+      <main style={styles.body} className="landing-body">
+        <div style={styles.leftNav} className="landing-left-nav">
           <button style={styles.navBtn} aria-label="Previous" onClick={() => navigate("/intro")}>
             <Diamond direction="left" />
           </button>
-          <span style={styles.navLabel}>INTRODUCING AI</span>
+          <span style={styles.navLabel} className="landing-nav-label">INTRODUCING AI</span>
         </div>
 
         <div style={styles.heroCenter}>
-          <h1 style={styles.heroText}>
+          <h1 style={styles.heroText} className="landing-hero-text">
             Sophisticated<br />skincare
           </h1>
         </div>
 
-        <div style={styles.rightNav}>
-          <span style={styles.navLabel}>LEARN MORE</span>
+        <div style={styles.rightNav} className="landing-right-nav">
+          <span style={styles.navLabel} className="landing-nav-label">LEARN MORE</span>
           <button style={styles.navBtn} aria-label="Next" onClick={() => navigate("/intro")}>
             <Diamond direction="right" />
           </button>

@@ -4,7 +4,48 @@
   padding: 0;
 }
 
+html, body, #root {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   font-family: "DM Sans", "Inter", sans-serif;
   background: #fcfcfc;
+}
+
+/* ── Mobile responsive overrides (≤ 600px) ─────────────────────────── */
+@media (max-width: 600px) {
+
+  /* LandingPage */
+  .landing-screen  { border: none !important; }
+  .landing-body    { padding: 0 12px !important; }
+  .landing-left-nav,
+  .landing-right-nav { min-width: 44px !important; gap: 6px !important; }
+  .landing-nav-label { display: none !important; }
+  .landing-hero-text { font-size: 44px !important; }
+
+  /* IntroducePage / LocationPage */
+  .intro-screen    { border: none !important; }
+  .intro-diamond   { width: 180px !important; height: 180px !important; }
+
+  /* ImageChoicePage — stack diamonds vertically */
+  .ic-screen       { border: none !important; }
+  .ic-choices      { flex-direction: column !important; gap: 32px !important; }
+  .ic-diamond      { width: 150px !important; height: 150px !important; }
+
+  /* AnalysisHubPage */
+  .hub-screen      { border: none !important; }
+  .hub-body        { flex-direction: column !important; gap: 16px !important; padding: 16px !important; justify-content: center !important; align-items: center !important; }
+  .hub-info        { position: static !important; margin-bottom: 8px !important; }
+  .hub-outer       { width: 240px !important; height: 240px !important; }
+
+  /* DemographicsPage — single column */
+  .demo-screen     { border: none !important; }
+  .demo-heading    { font-size: 28px !important; }
+  .demo-columns    { grid-template-columns: 1fr !important; }
+  .demo-sidebar    { flex-direction: row !important; border-right: none !important; border-bottom: 1px solid rgba(26,27,28,0.1) !important; overflow-x: auto !important; }
+  .demo-table-wrap { border-left: none !important; border-top: 1px solid rgba(26,27,28,0.1) !important; }
+  .demo-chart-wrap { padding: 16px 0 !important; }
+  .demo-chart-wrap svg { width: 180px !important; height: 180px !important; }
 }
