@@ -181,7 +181,7 @@ const ds = {
   brand: { fontSize: 12, fontWeight: 600, letterSpacing: "0.1em", color: "#fcfcfc" },
   tag: { fontSize: 11, color: "rgba(252,252,252,0.5)", letterSpacing: "0.06em" },
   videoWrap: { flex: 1, position: "relative", minHeight: "100vh", overflow: "hidden" },
-  feed: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" },
+  feed: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain" },
   captureBtn: { position: "absolute", right: 32, top: "50%", transform: "translateY(-50%)", width: 52, height: 52, borderRadius: "50%", border: "2px solid rgba(252,252,252,0.8)", background: "transparent", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 10 },
   captureInner: { width: 40, height: 40, borderRadius: "50%", background: "rgba(252,252,252,0.9)" },
   tips: { position: "absolute", bottom: 56, left: 0, right: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, zIndex: 10 },

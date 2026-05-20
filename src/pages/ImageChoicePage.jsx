@@ -202,7 +202,7 @@ const ps = {
   brand: { fontSize: 12, fontWeight: 600, letterSpacing: "0.1em", color: "#fcfcfc" },
   tag: { fontSize: 11, color: "rgba(252,252,252,0.5)", letterSpacing: "0.06em" },
   imgWrap: { flex: 1, position: "relative", minHeight: "100vh", overflow: "hidden" },
-  img: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" },
+  img: { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain" },
   tips: { position: "absolute", bottom: 56, left: 0, right: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, zIndex: 10 },
   tipsLabel: { fontSize: 8, letterSpacing: "0.1em", color: "rgba(252,252,252,0.5)", textTransform: "uppercase" },
   tipsList: { display: "flex", gap: 24 },
